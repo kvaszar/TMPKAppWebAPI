@@ -19,12 +19,14 @@ class User(UserBase):
 
 class RoleBase(BaseModel):
     name: str
+    user_id: int
 
 class RoleCreate(RoleBase):
     pass
 
 class Role(RoleBase):
     id: int
+    user: User
     class Config:
         orm_mode=True
 
@@ -48,6 +50,7 @@ class Customer(CustomerBase):
 class ContractBase(BaseModel):
     date: str
     osmp: str
+    customer_id: int
 
 class ContractCreate(ContractBase):
     pass
@@ -61,6 +64,7 @@ class Contract(ContractBase):
 
 class ServiceBase(BaseModel):
     name: str
+    contract_id: int
 
 class ServiceCreate(ServiceBase):
     pass
@@ -90,12 +94,14 @@ class Address(AddressBase):
 class CommutatorBase(BaseModel):
     name: str
     ip: str
+    address_id: int
 
 class CommutatorCreate(CommutatorBase):
     pass
 
 class Commutator(CommutatorBase):
     id: int
+    address: Address
     class Config:
         orm_mode=True
 
@@ -105,6 +111,7 @@ class PortBase(BaseModel):
     name: str
     number: int
     status_link: str
+    commutator_id: int
 
 class PortCreate(PortBase):
     pass
@@ -122,11 +129,13 @@ class TaskBase(BaseModel):
     date_creation: str
     date_from: str
     date_to: str
+    contract_id: int
 
 class TaskCreate(TaskBase):
     pass
 
 class Task(TaskBase):
     id: int
+    contract: Contract
     class Config:
         orm_mode=True
